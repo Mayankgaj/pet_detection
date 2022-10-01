@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s: ')
 
-package_name = None # Write name of package
+package_name = "cnn_classifier" # Write name of package
 
 list_of_files = [
     ".github/workflows/.gitkeep",
