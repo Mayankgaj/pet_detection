@@ -132,4 +132,6 @@ dmypy.json
 .vscode
 
 # artifact
-artifacts
+artifacts/*
+*.jpg
+*.zip
