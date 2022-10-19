@@ -7,6 +7,8 @@ from cnn_classifier import logger
 
 class PrepareBaseModel:
     def __init__(self, config: PrepareBaseModelConfig):
+        self.full_model = None
+        self.model = None
         self.config = config
 
     def get_base_model(self):
@@ -14,7 +16,7 @@ class PrepareBaseModel:
         self.model = tf.keras.applications.vgg16.VGG16(
             input_shape=self.config.params_image_size,
             weights=self.config.params_weights,
-            include_top=self.config.params_include_top  # layers + (flatten or dense) 
+            include_top=self.config.params_include_top  # layers + (flatten or dense)
         )
         logging.info(f"Saving base model with parameters input_shape={self.config.params_image_size},"
                      f"weights={self.config.params_weights}"
@@ -26,12 +28,12 @@ class PrepareBaseModel:
     def _prepare_full_model(model, classes, freeze_all, freeze_till, learning_rate):
         if freeze_all:
             logging.info("freezing all layers from base model")
-            for layer in model.layers:
+            for _ in model.layers:
                 model.trainable = False  # This will freeze all the layers of the model
         elif (freeze_till is not None) and (freeze_till > 0):
-            logging.info(f"frezzing layer of base model till -{freeze_till}")
-            # As no. increases no. of layers from last will not frozen  
-            for layer in model.layers[:-freeze_till]:
+            logging.info(f"freezing layer of base model till -{freeze_till}")
+            # As no. increases no. of layers from last will not freeze
+            for _ in model.layers[:-freeze_till]:
                 model.trainable = False
 
         logging.info("Taking base model layers for full model")
@@ -46,7 +48,7 @@ class PrepareBaseModel:
             inputs=model.input,
             outputs=prediction
         )
-        logging.info("Added Layers Sucessfully in full model")
+        logging.info("Added Layers Successfully in full model")
 
         full_model.compile(
             optimizer=tf.keras.optimizers.SGD(learning_rate=learning_rate),
