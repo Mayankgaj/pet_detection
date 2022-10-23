@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/cnn_classifier/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: configs/config.yaml
+      md5: 29a0a42dfcd9cc62d7985892ecc2a1e1
+      size: 827
+    - path: src/cnn_classifier/pipeline/stage_01_data_ingestion.py
+      md5: 50ac77660073ed2c0bb5089855a727c1
+      size: 723
+    outs:
+    - path: artifacts/data_ingestion/PetImages
+      md5: 3a5cf86541f22c236620ce5b952ad684.dir
+      size: 848866410
+      nfiles: 24998
