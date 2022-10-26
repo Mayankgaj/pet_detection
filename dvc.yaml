@@ -36,3 +36,17 @@ stages:
       - AUGMENTATION
     outs:
       - artifacts/training/model.h5
+
+  evaluation:
+    cmd: python src/cnn_classifier/pipeline/stage_04_evaluation.py
+    deps:
+      - src/cnn_classifier/pipeline/stage_04_evaluation.py
+      - configs/config.yaml
+      - artifacts/data_ingestion/PetImages
+      - artifacts/training/model.h5
+    params:
+      - IMAGE_SIZE
+      - BATCH_SIZE
+    metrics:
+    - scores.json:
+        cache: false
